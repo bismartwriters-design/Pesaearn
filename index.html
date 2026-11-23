@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PesaEarn • Watch & Earn</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #0b0f17;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    /* phone frame */
+    .phone-frame {
+      width: 100%;
+      max-width: 390px;
+      background: #0f141f;
+      border-radius: 40px;
+      box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.8), 0 0 0 2px #2a3440;
+      padding: 1.5rem 1.2rem 1.8rem;
+      transition: all 0.2s;
+      border: 1px solid #2e3a4a;
+    }
+
+    /* status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #a0b0c5;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      padding: 0 0.2rem;
+    }
+
+    .status-bar i {
+      color: #3b8bff;
+    }
+
+    /* header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.8rem;
+    }
+
+    .logo-area h1 {
+      color: #ffffff;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 0%, #b3cbff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+
+    .logo-area span {
+      font-size: 0.8rem;
+      color: #7a8fa6;
+      display: block;
+      margin-top: 2px;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    .user-badge {
+      background: #1e2a3a;
+      border-radius: 50px;
+      padding: 0.45rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid #31465e;
+    }
+
+    .user-badge i {
+      color: #ffd966;
+      font-size: 1rem;
+    }
+
+    .user-badge span {
+      color: #e0edff;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* balance card */
+    .balance-card {
+      background: linear-gradient(145deg, #131c2b, #0e1622);
+      border-radius: 28px;
+      padding: 1.6rem 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #293a4e;
+      box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .balance-card::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(59, 139, 255, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .balance-label {
+      color: #8aa0bb;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 0.5rem;
+    }
+
+    .balance-label i {
+      color: #3b8bff;
+      font-size: 0.8rem;
+    }
+
+    .balance-amount {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .balance-amount small {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #6f8eb0;
+      letter-spacing: 0;
+    }
+
+    .balance-amount .currency {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #b3cbff;
+      margin-right: 2px;
+    }
+
+    .balance-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      color: #6f8eb0;
+      font-size: 0.8rem;
+      border-top: 1px dashed #263445;
+      padding-top: 1rem;
+    }
+
+    .balance-sub span i {
+      color: #28c76f;
+      margin-right: 4px;
+    }
+
+    /* action buttons */
+    .action-grid {
+      display: flex;
+      gap: 0.9rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .btn {
+      flex: 1;
+      border: none;
+      border-radius: 20px;
+      padding: 0.9rem 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: #1b2537;
+      color: #d2e0f5;
+      border: 1px solid #2d3f58;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn i {
+      font-size: 1rem;
+    }
+
+    .btn-watch {
+      background: linear-gradient(145deg, #1e5cff, #1746c4);
+      color: white;
+      border: 1px solid #3b7bff;
+      box-shadow: 0 6px 14px rgba(30, 92, 255, 0.3);
+    }
+
+    .btn-watch i {
+      color: white;
+    }
+
+    .btn-withdraw {
+      background: #1f2b3c;
+      border-color: #3d556f;
+      color: #d2e0f5;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-watch:active {
+      background: linear-gradient(145deg, #1746c4, #1e5cff);
+    }
+
+    /* video list */
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-title h3 {
+      color: #eef4ff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    .section-title a {
+      color: #3b8bff;
+      font-size: 0.8rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .video-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .video-item {
+      background: #111b29;
+      border-radius: 18px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      border: 1px solid #253346;
+      transition: all 0.1s;
+      cursor: pointer;
+    }
+
+    .video-item:hover {
+      background: #162233;
+      border-color: #3f5a7a;
+    }
+
+    .video-thumb {
+      width: 48px;
+      height: 48px;
+      background: #1e2e44;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #7fa5d9;
+      flex-shrink: 0;
+      border: 1px solid #2b405a;
+    }
+
+    .video-info {
+      flex: 1;
+    }
+
+    .video-info h4 {
+      color: #ecf3ff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 3px;
+      line-height: 1.2;
+    }
+
+    .video-info p {
+      color: #7a8fa6;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-info p i {
+      font-size: 0.65rem;
+      color: #3b8bff;
+    }
+
+    .reward-badge {
+      background: #1a2c3f;
+      padding: 0.3rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #8ae68a;
+      border: 1px solid #2d5a3a;
+      white-space: nowrap;
+    }
+
+    .reward-badge i {
+      font-size: 0.7rem;
+      margin-right: 3px;
+      color: #8ae68a;
+    }
+
+    /* withdrawal alert / fee modal (inline) */
+    .withdraw-notice {
+      background: #1a2332;
+      border-radius: 18px;
+      padding: 1.2rem 1.1rem;
+      border: 1px solid #3c4f68;
+      margin-top: 0.5rem;
+      display: none; /* hidden by default, toggled via js */
+      animation: fadeSlide 0.25s ease;
+    }
+
+    .withdraw-notice.show {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .withdraw-notice .fee-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+    }
+
+    .withdraw-notice .fee-header i {
+      font-size: 1.8rem;
+      color: #ffb347;
+    }
+
+    .withdraw-notice .fee-header h4 {
+      color: #ffdb9f;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .withdraw-notice p {
+      color: #b8cbdf;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .withdraw-notice p strong {
+      color: #ffffff;
+      background: #2e405b;
+      padding: 2px 8px;
+      border-radius: 30px;
+      font-weight: 700;
+    }
+
+    .withdraw-notice .fee-actions {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .withdraw-notice .fee-actions button {
+      flex: 1;
+      padding: 0.7rem;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    .fee-pay {
+      background: #ffb347;
+      color: #1c1f26;
+      box-shadow: 0 6px 12px rgba(255, 180, 71, 0.25);
+    }
+
+    .fee-pay:active {
+      background: #e09e2e;
+    }
+
+    .fee-cancel {
+      background: #2b3d53;
+      color: #cfdff2;
+    }
+
+    .fee-cancel:active {
+      background: #1e2d3f;
+    }
+
+    .footer-note {
+      margin-top: 1.4rem;
+      text-align: center;
+      color: #415a73;
+      font-size: 0.7rem;
+      letter-spacing: 0.3px;
+    }
+
+    .footer-note i {
+      color: #3b8bff;
+      margin: 0 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="phone-frame">
+
+  <!-- status bar -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span>
+  </div>
+
+  <!-- header -->
+  <div class="header">
+    <div class="logo-area">
+      <h1>PesaEarn</h1>
+      <span>watch • earn • withdraw</span>
+    </div>
+    <div class="user-badge">
+      <i class="fas fa-user-circle"></i>
+      <span>@you</span>
+    </div>
+  </div>
+
+  <!-- balance card -->
+  <div class="balance-card">
+    <div class="balance-label">
+      <i class="fas fa-wallet"></i> AVAILABLE BALANCE
+    </div>
+    <div class="balance-amount">
+      <span class="currency">$</span> <span id="balanceDisplay">124.50</span> <small>USD</small>
+    </div>
+    <div class="balance-sub">
+      <span><i class="fas fa-arrow-up"></i> +$6.20 today</span>
+      <span><i class="fas fa-clock"></i> Updated now</span>
+    </div>
+  </div>
+
+  <!-- action buttons -->
+  <div class="action-grid">
+    <button class="btn btn-watch" id="watchBtn">
+      <i class="fas fa-play"></i> Watch & earn
+    </button>
+    <button class="btn btn-withdraw" id="withdrawBtn">
+      <i class="fas fa-hand-holding-usd"></i> Withdraw
+    </button>
+  </div>
+
+  <!-- video list -->
+  <div class="section-title">
+    <h3><i class="fas fa-video" style="color: #3b8bff; margin-right: 6px;"></i> Watch & earn</h3>
+    <a href="#">See all</a>
+  </div>
+
+  <div class="video-list">
+    <!-- video 1 -->
+    <div class="video-item" data-reward="0.75" data-title="Crypto update 2025">
+      <div class="video-thumb"><i class="fas fa-play-circle"></i></div>
+      <div class="video-info">
+        <h4>Crypto update 2025</h4>
+        <p><i class="fas fa-eye"></i> 2.1k views • 0:30</p>
+      </div>
+      <div class="reward-badge"><i class="fas fa-dollar-sign"></i>0.75</div>
+    </div>
+    <!-- video 2 -->
+    <div class="video-item" data-reward="1.20" data-title="Passive income tricks">
+      <div class="video-thumb"><i class="fas fa-play-circle"></i></div>
+      <div class="video-info">
+        <h4>Passive income tricks</h4>
+        <p><i class="fas fa-eye"></i> 5.6k views • 0:45</p>
+      </div>
+      <div class="reward-badge"><i class="fas fa-dollar-sign"></i>1.20</div>
+    </div>
+    <!-- video 3 -->
+    <div class="video-item" data-reward="0.50" data-title="PesaEarn quick tip">
+      <div class="video-thumb"><i class="fas fa-play-circle"></i></div>
+      <div class="video-info">
+        <h4>PesaEarn quick tip</h4>
+        <p><i class="fas fa-eye"></i> 1.3k views • 0:20</p>
+      </div>
+      <div class="reward-badge"><i class="fas fa-dollar-sign"></i>0.50</div>
+    </div>
+  </div>
+
+  <!-- withdraw fee notice (hidden initially) -->
+  <div class="withdraw-notice" id="withdrawFeePanel">
+    <div class="fee-header">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h4>Transaction fee required</h4>
+    </div>
+    <p>
+      To complete your withdrawal, a one-time <strong>$5.00 USD</strong> processing fee is required.
+      This fee covers network & security costs.
+    </p>
+    <div class="fee-actions">
+      <button class="fee-pay" id="payFeeBtn">Pay $5.00</button>
+      <button class="fee-cancel" id="cancelFeeBtn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="footer-note">
+    <i class="fas fa-lock"></i> PesaEarn • 100% secure <i class="fas fa-shield-alt"></i>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ----- STATE -----
+    let currentBalance = 124.50;        // fake balance, but we display it
+    const balanceEl = document.getElementById('balanceDisplay');
+    const withdrawPanel = document.getElementById('withdrawFeePanel');
+    const watchBtn = document.getElementById('watchBtn');
+    const withdrawBtn = document.getElementById('withdrawBtn');
+    const payFeeBtn = document.getElementById('payFeeBtn');
+    const cancelFeeBtn = document.getElementById('cancelFeeBtn');
+    const videoItems = document.querySelectorAll('.video-item');
+
+    // Helper to update displayed balance
+    function updateBalanceDisplay() {
+      balanceEl.textContent = currentBalance.toFixed(2);
+    }
+
+    // ----- WATCH & EARN (fake video watch) -----
+    function watchRandomVideo() {
+      // pick a random video from the list and add its reward
+      const randomIndex = Math.floor(Math.random() * videoItems.length);
+      const selectedVideo = videoItems[randomIndex];
+      const reward = parseFloat(selectedVideo.getAttribute('data-reward')) || 0.50;
+      
+      // increase balance (fake earnings)
+      currentBalance += reward;
+      updateBalanceDisplay();
+
+      // visual feedback on the button
+      watchBtn.innerHTML = `<i class="fas fa-check-circle"></i> +$${reward.toFixed(2)}`;
+      setTimeout(() => {
+        watchBtn.innerHTML = `<i class="fas fa-play"></i> Watch & earn`;
+      }, 900);
+
+      // hide the withdraw fee panel if it was visible (to avoid confusion)
+      withdrawPanel.classList.remove('show');
+    }
+
+    // event: watch button
+    watchBtn.addEventListener('click', watchRandomVideo);
+
+    // event: clicking on a video card also earns (simulates watching)
+    videoItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        // don't trigger if clicking on something weird, but fine
+        const reward = parseFloat(this.getAttribute('data-reward')) || 0.25;
+        currentBalance += reward;
+        updateBalanceDisplay();
+
+        // visual feedback on the item
+        const originalBorder = this.style.borderColor;
+        this.style.borderColor = '#3b8bff';
+        this.style.background = '#162b44';
+        setTimeout(() => {
+          this.style.borderColor = '#253346';
+          this.style.background = '#111b29';
+        }, 300);
+
+        // hide fee panel
+        withdrawPanel.classList.remove('show');
+      });
+    });
+
+    // ----- WITHDRAW BUTTON: SHOW $5 FEE NOTICE -----
+    withdrawBtn.addEventListener('click', function() {
+      // toggle the fee panel (always show, but we can toggle)
+      // per spec "when there try to withdraw money they should pay a transaction fee of 5 dollars"
+      // so we show the fee notice each time they click withdraw.
+      withdrawPanel.classList.add('show');
+    });
+
+    // ----- PAY FEE BUTTON (simulates payment, deducts $5 but actually we just show message) -----
+    payFeeBtn.addEventListener('click', function() {
+      if (currentBalance >= 5.00) {
+        // deduct the $5 fee (fake)
+        currentBalance -= 5.00;
+        updateBalanceDisplay();
+        
+        // show success feedback
+        withdrawPanel.innerHTML = `
+          <div style="text-align: center; padding: 0.5rem 0;">
+            <i class="fas fa-check-circle" style="font-size: 2.5rem; color: #28c76f; margin-bottom: 8px;"></i>
+            <h4 style="color: #ffffff; margin-bottom: 6px;">Fee paid successfully</h4>
+            <p style="color: #b8cbdf; font-size: 0.9rem;">Your withdrawal request is being processed.<br><span style="color: #ffb347;">$5.00 fee deducted.</span></p>
+            <button id="resetWithdrawPanel" style="margin-top: 14px; background: #2b3d53; border: none; padding: 8px 20px; border-radius: 40px; color: white; font-weight: 500; cursor: pointer;">Close</button>
+          </div>
+        `;
+
+        // re-attach close/reset button
+        const resetBtn = document.getElementById('resetWithdrawPanel');
+        if (resetBtn) {
+          resetBtn.addEventListener('click', function() {
+            // restore original panel content after close
+            restoreWithdrawPanel();
+          });
+        }
+      } else {
+        // not enough balance to pay fee
+        alert('Insufficient balance to cover the $5 fee. Watch more videos to earn.');
+      }
+    });
+
+    // Function to restore the withdraw panel to original state
+    function restoreWithdrawPanel() {
+      withdrawPanel.innerHTML = `
+        <div class="fee-header">
+          <i class="fas fa-exclamation-triangle"></i>
+          <h4>Transaction fee required</h4>
+        </div>
+        <p>
+          To complete your withdrawal, a one-time <strong>$5.00 USD</strong> processing fee is required.
+          This fee covers network & security costs.
+        </p>
+        <div class="fee-actions">
+          <button class="fee-pay" id="payFeeBtn">Pay $5.00</button>
+          <button class="fee-cancel" id="cancelFeeBtn">Cancel</button>
+        </div>
+      `;
+
+      // re-attach event listeners to the new buttons
+      document.getElementById('payFeeBtn').addEventListener('click', payFeeHandler);
+      document.getElementById('cancelFeeBtn').addEventListener('click', cancelFeeHandler);
+    }
+
+    // Named handler for pay fee (reused)
+    function payFeeHandler() {
+      if (currentBalance >= 5.00) {
+        currentBalance -= 5.00;
+        updateBalanceDisplay();
+        
+        withdrawPanel.innerHTML = `
+          <div style="text-align: center; padding: 0.5rem 0;">
+            <i class="fas fa-check-circle" style="font-size: 2.5rem; color: #28c76f; margin-bottom: 8px;"></i>
+            <h4 style="color: #ffffff; margin-bottom: 6px;">Fee paid successfully</h4>
+            <p style="color: #b8cbdf; font-size: 0.9rem;">Your withdrawal request is being processed.<br><span style="color: #ffb347;">$5.00 fee deducted.</span></p>
+            <button id="resetWithdrawPanel" style="margin-top: 14px; background: #2b3d53; border: none; padding: 8px 20px; border-radius: 40px; color: white; font-weight: 500; cursor: pointer;">Close</button>
+          </div>
+        `;
+        document.getElementById('resetWithdrawPanel').addEventListener('click', restoreWithdrawPanel);
+      } else {
+        alert('Insufficient balance to cover the $5 fee. Watch more videos to earn.');
+      }
+    }
+
+    // Named handler for cancel
+    function cancelFeeHandler() {
+      withdrawPanel.classList.remove('show');
+    }
+
+    // Attach initial listeners (already attached via HTML, but we ensure)
+    // Overwrite the original payFeeBtn listener with named function
+    // Remove old listener by cloning? Simpler: attach new.
+    // But we already have payFeeBtn from initial HTML. Let's reassign:
+    if (payFeeBtn) {
+      payFeeBtn.removeEventListener('click', payFeeHandler); // just in case
+    }
+    // Use event delegation or re-select
+    // We'll replace the initial listeners with the named ones.
+
+    // The initial payFeeBtn and cancelFeeBtn are already in DOM.
+    // We need to remove the anonymous listeners and add named ones.
+    // Since we can't easily remove anonymous, we'll clone the buttons or use new elements.
+    // Better: replace the entire panel's inner HTML on page load with the same structure and new listeners.
+    // But let's do it elegantly: on page load, we replace the innerHTML of with
