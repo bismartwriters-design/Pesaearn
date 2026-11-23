@@ -1,6 +1,8 @@
-// Paste ONLY your Supabase project URL and public anon/publishable key here.
-// Never place service-role keys, M-Pesa secrets, passwords or OTPs in this file.
+
+// Pesa Earn Supabase configuration
+
 window.PESA_EARN_CONFIG = {
-  SUPABASE_URL: "https://YOUR-PROJECT.supabase.co",
-  SUPABASE_ANON_KEY: "YOUR_SUPABASE_PUBLIC_ANON_KEY"
+  SUPABASE_URL: sb_publishable_gDGDFU_gvpMH895wd8GkHg_gvhKbp9s
+  SUPABASE_ANON_KEY: sb_publishable_gDGDFU_gvpMH895wd8GkHg_gvhKbp9s
 };
+
